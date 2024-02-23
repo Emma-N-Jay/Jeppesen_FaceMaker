@@ -14,6 +14,17 @@ public class Face {
     int hairColor;
     // identifies which hair style the face has.
     int hairStyle;
+    int skinColor;
+
+    //instance variables
+    int red;
+    int green;
+    int blue;
+
+    int currentSelected = R.id.hair;
+    boolean hair = true;
+    boolean eyes = false;
+    boolean skin = false;
 
 
     public Face(){
@@ -46,5 +57,14 @@ public int getHairStyle(int hStyle){
     return hStyle;
 }
 
+//get colors
+    public int getHairColor() { return this.hairColor;}
+    public int getSkinColor() { return this.skinColor;}
+    public int getEyeColor() { return this.eyeColor;}
+
+    //set colors
+    public void setHairColor(int x) { this.hairColor = x;}
+    public void setEyeColor(int x) {this.eyeColor = x;}
+    public void setSkinColor(int x) {this.skinColor = x;}
 
 }
