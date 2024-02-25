@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     RadioButton hair;
     RadioButton eyes;
     RadioButton skin;
+    Button randFace;
+    Spinner hairSpin;
 
     private weDraw mainCanvas;
    private Face face;
@@ -67,14 +69,16 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Spinner spinner = (Spinner)findViewById(R.id.hairselector);
-
         //get the surface view
         mainCanvas = findViewById(R.id.faceView);
         face = mainCanvas.getFace();
 
+
+
         // Create an instance of faceController
         faceController mainControl = new faceController(mainCanvas, this);
+
+        mainControl.updateColor();
 
         //find seek bars
         redSeek = findViewById(R.id.numRed);
@@ -85,22 +89,30 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         hair = findViewById(R.id.hair);
         eyes = findViewById(R.id.eyes);
         skin = findViewById(R.id.skin);
+        randFace = findViewById(R.id.randomFace);
+
+
+        //Getting the instance of Spinner
+        hairSpin = findViewById(R.id.hairselector);
 
         // Set mainControl as the OnClickListener for the buttons
         hair.setOnClickListener(mainControl);
         eyes.setOnClickListener(mainControl);
         skin.setOnClickListener(mainControl);
+        randFace.setOnClickListener(mainControl);
 
         // Set mainControl as the OnChangeListener for the seek bars
         redSeek.setOnSeekBarChangeListener(mainControl);
         greenSeek.setOnSeekBarChangeListener(mainControl);
         blueSeek.setOnSeekBarChangeListener(mainControl);
 
-
-
-//Taken from the Android Studio page
-// https://developer.android.com/develop/ui/views/components/spinner#java
-
+        /**
+         External Citation
+         Date: 15 February 2024
+         Problem: Didn't know how to populate a spinner
+         Resource: https://developer.android.com/develop/ui/views/components/spinner#java
+         Solution: Modified some example code from Android documentation
+         */
 // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
@@ -110,93 +122,15 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 // Specify the layout to use when the list of choices appears.
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner.
-        spinner.setAdapter(adapter);
+        hairSpin.setAdapter(adapter);
 
-
-
-
-
-//Handler idea from StackOverflow
-        Handler seekBarHandler = new Handler();
-        //SurfaceView surface = (SurfaceView) findViewById(R.id.faceView);
-
-        //hair.setOnCheckedChangeListener(mainControl);
-/**
- * COME BACK HERE: TODO - fix this
- */
-//        if(hair.isChecked()){
-//            face.currentSelected = R.id.hair;
-//        }
-//        if(eyes.isChecked()){
-//            face.currentSelected = R.id.eyes;
-//        }
-//        if(skin.isChecked()){
-//            face.currentSelected = R.id.skin;
-//        }
-
-
-//        if(hair.isChecked()){
-//            //get the progress
-//            redHair = this.getRed();
-//            greenHair = this.getGreen();
-//            blueHair = this.getBlue();
-//
-//            redSeek.setProgress(redHair);
-//            greenSeek.setProgress(greenHair);
-//            blueSeek.setProgress(blueHair);
-//        }
-//
-//        if(eyes.isChecked()){
-//            //get the progress
-//            redEyes = this.getRed();
-//            greenEyes = this.getGreen();
-//            blueEyes= this.getBlue();
-//
-//            redSeek.setProgress(redEyes);
-//            greenSeek.setProgress(greenEyes);
-//            blueSeek.setProgress(blueEyes);
-//        }
-//
-//        if(skin.isChecked()){
-//            //get the progress
-//            redSkin = this.getRed();
-//            greenSkin = this.getGreen();
-//            blueSkin= this.getBlue();
-//
-//            redSeek.setProgress(redSkin);
-//            greenSeek.setProgress(greenSkin);
-//            blueSeek.setProgress(blueSkin);
-//        }
-
-//        redSeek.setProgress(red);
-//        greenSeek.setProgress(green);
-//        blueSeek.setProgress(blue);
-
-//        seekBar.setMax(0);
-//        seekBar.setMax(max);
-//        seekBar.setProgress(progress);
+        //Set main control as OnItemSelectedListener for the spinny boi
+        hairSpin.setOnItemSelectedListener(mainControl);
     }
 
-    public int getRed() {
-        return redSeek.getProgress();
-    }
-    public int getGreen() {
-        return greenSeek.getProgress();
-    }
 
-    public int getBlue() {
-        return blueSeek.getProgress();
-    }
 
-    public Activity getActivity(){
-        return  this;
-    }
-
-    public void draw (Canvas canvas){
-
-    }
-
-    //Surface View stuff
+    //Listener Methods
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder holder) {
 
