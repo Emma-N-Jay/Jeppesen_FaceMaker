@@ -3,6 +3,7 @@ package up.CS301.jeppesen_facemaker;
 import static android.graphics.Color.rgb;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,42 +12,76 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+/**
+ * @Author Emma Jeppesen
+ * Date:2/22/24
+ */
 public class faceController implements View.OnClickListener, CompoundButton.OnCheckedChangeListener,
         SeekBar.OnSeekBarChangeListener, View.OnTouchListener, AdapterView.OnItemSelectedListener {
 
 
+    //Get some references
     private weDraw mainView;
     private Face faceMain;
 
+    //set up the views
     private TextView redLabel;
     private TextView greenLabel;
     private TextView blueLabel;
-    private Button randomFace;
 
+    //(Would be for if the setting progress worked)
+    private SeekBar redSeek;
+    private SeekBar greenSeek;
+    private SeekBar blueSeek;
+
+    //value of rgb
     private int redVal;
     private int greenVal;
     private int blueVal;
 
-    //private Activity activity;
 
-    //so we can use the main cakeview and not make a new object off it.
     public faceController(weDraw initFaceView, Activity myActivity){
+        //give all the things values
         mainView = initFaceView;
         faceMain = mainView.getFace();
         redLabel = myActivity.findViewById(R.id.red);
         greenLabel = myActivity.findViewById(R.id.green);
         blueLabel = myActivity.findViewById(R.id.blue);
-        randomFace = myActivity.findViewById(R.id.randomFace);
 
     }
 
+//    //Get the seek bars (Would be for if the setting progress worked)
+//    redSeek = mainView.findViewById(R.id.numRed);
+//    greenSeek = mainView.findViewById(R.id.numGreen);
+//    blueSeek = mainView.findViewById(R.id.numBlue);
+
     @Override
     public void onClick(View v) {
-       // Log.d("cake", "click!");
+
+        //Colors (Would be for if the setting progress worked)
+        int red;
+        int green;
+        int blue;
+
+        redSeek = mainView.findViewById(R.id.numRed);
+        greenSeek = mainView.findViewById(R.id.numGreen);
+        blueSeek = mainView.findViewById(R.id.numBlue);
 
         //if the view is equal to the button, change the current selected variable
         if(v.getId() == R.id.hair){
             faceMain.currentSelected = R.id.hair;
+
+            /**
+             * I really tried to get it to set the progress, but I couldn't figure
+             * it out. Here is my attempt. It makes it crash when you click the hair button.
+             */
+//            red = Color.red(faceMain.hairRed);
+//            green = Color.green(faceMain.hairGreen);
+//            blue = Color.blue(faceMain.hairBlue);
+//            this.redSeek.setProgress(red);
+//            this.greenSeek.setProgress(green);
+//            this.blueSeek.setProgress(blue);
+
         }else if(v.getId() == R.id.eyes){
             faceMain.currentSelected = R.id.eyes;
         }else if(v.getId() == R.id.skin){
@@ -58,7 +93,6 @@ public class faceController implements View.OnClickListener, CompoundButton.OnCh
             this.updateColor();
         }
 
-
         mainView.invalidate();
     }
 
@@ -69,8 +103,6 @@ public class faceController implements View.OnClickListener, CompoundButton.OnCh
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-
         mainView.invalidate();
     }
 
@@ -104,7 +136,7 @@ public class faceController implements View.OnClickListener, CompoundButton.OnCh
             faceMain.hairRed = faceMain.red;
             faceMain.hairGreen = faceMain.green;
             faceMain.hairBlue = faceMain.blue;
-            //seekBar.setProgress();
+
             this.updateColor();
         }
         else if(faceMain.currentSelected == R.id.skin){
@@ -117,7 +149,14 @@ public class faceController implements View.OnClickListener, CompoundButton.OnCh
         }
         else if(faceMain.currentSelected == R.id.eyes){
             faceMain.setEyeColor(c);
+
+            faceMain.eyeRed = faceMain.red;
+            faceMain.eyeGreen = faceMain.green;
+            faceMain.eyeBlue = faceMain.blue;
+
+            this.updateColor();
         }
+
             mainView.invalidate();
 
     }
@@ -135,6 +174,7 @@ public class faceController implements View.OnClickListener, CompoundButton.OnCh
 
     }
 
+    //Updates the labels for the colors
     public void updateColor(){
         if(faceMain.currentSelected == R.id.hair) {
             this.redLabel.setText("Red:" + " " + faceMain.hairRed);
@@ -151,15 +191,11 @@ public class faceController implements View.OnClickListener, CompoundButton.OnCh
             this.greenLabel.setText("Green:" + " " + faceMain.eyeGreen);
             this.blueLabel.setText("Blue:" + " " + faceMain.eyeBlue);
         }
-//        this.redLabel.setText("Red:" + " " + faceMain.red);
-//        this.greenLabel.setText("Green:" + " " + faceMain.green);
-//        this.blueLabel.setText("Blue:" + " " + faceMain.blue);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         faceMain.setHairStyle(position);
-
         mainView.invalidate();
     }
 

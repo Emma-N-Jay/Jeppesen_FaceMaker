@@ -18,47 +18,26 @@ import android.widget.Spinner;
 
 /**
  * @Author Emma Jeppesen
- * Date:2/14/24
+ * Date:2/22/24
  */
-/*
-[20%] When the user selects a new value on the Spinner, the hair’s appearance should be
-changed to reflect the user's choice.
-
-• [30%] When the user selects one of the RadioButtons (hair, eyes or skin) the current
-progress of the SeekBars (red, green and blue) should be moved to reflect the current
-color of the corresponding element.
-
-• [25%] When the user adjusts any of the SeekBars (red, green or blue), the currently
-selected element (hair, eyes or skin) should change color on the SurfaceView.
-
-• [5%] When the app starts up, it should display a random face with the various views
-already set to reflect the values used to construct that face. Each time the user hits the
-“Random Face” button, a new random face should be generated and displayed in the
-same manner with matching views.
-
-• [15%] Your program should conform to the CS301 Coding Standard.
-
-• [5%] Turn your program in correctly using GitHub (see instructions below).
- */
-
-
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback, SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
 
 
     //find the seek bars
-    SeekBar redSeek;
-    SeekBar greenSeek;
-    SeekBar blueSeek;
+    public SeekBar redSeek;
+    public SeekBar greenSeek;
+    public SeekBar blueSeek;
 
 
     //find buttons
-    RadioButton hair;
-    RadioButton eyes;
-    RadioButton skin;
-    Button randFace;
-    Spinner hairSpin;
+    public RadioButton hair;
+    public RadioButton eyes;
+    public RadioButton skin;
+    public Button randFace;
+    public Spinner hairSpin;
 
+    //get the canvas and instance of a face
     private weDraw mainCanvas;
    private Face face;
 
@@ -78,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         // Create an instance of faceController
         faceController mainControl = new faceController(mainCanvas, this);
 
+        //update the color based on the random face generated on start
         mainControl.updateColor();
 
         //find seek bars
@@ -166,6 +146,5 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
     @Override
     public void onClick(View v) {
         mainCanvas.invalidate();
-
     }
 }

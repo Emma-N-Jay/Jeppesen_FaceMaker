@@ -23,7 +23,7 @@ public class Face {
     public int hairRed;
     public int hairGreen;
     public int hairBlue;
-    int hairStyle;
+    public int hairStyle;
 
     //Skin variables
     public int skinColor;
@@ -33,9 +33,9 @@ public class Face {
 
 
     //color instance variables
-    int red;
-    int green;
-    int blue;
+    public int red;
+    public int green;
+    public int blue;
 
 //Store which button is selected
     int currentSelected = R.id.hair;
